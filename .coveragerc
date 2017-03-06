@@ -1,9 +1,2 @@
 [report]
-omit =
-    **/.buildout/eggs/*
-    **/lib/python*
-    **/usr/*
-    **/bin/test
-    **/buildout-cache/eggs/*
-    **/eggs/*
-    **/parts/*
+include = src/sc/recipe/staticresources/*
