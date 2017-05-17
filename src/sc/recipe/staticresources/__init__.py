@@ -31,7 +31,7 @@ class Recipe(object):
             with open(bin_directory + '/script', 'w') as output_file:
                 output_file.write('#!/bin/bash\nbin/code-analysis')
             subprocess.call(['chmod', '775', bin_directory + '/' + s])
-            print('Install ' + s)
+            print('Install ' + s)  # noqa: T003
 
     def update(self):
         self.install()
