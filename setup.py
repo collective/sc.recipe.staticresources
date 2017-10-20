@@ -41,6 +41,7 @@ setup(name='sc.recipe.staticresources',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'mr.bob',
           'setuptools',
           'zc.buildout',
           'zc.recipe.egg',
