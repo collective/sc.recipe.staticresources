@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from mrbob.configurator import parse_template
 from mrbob.rendering import jinja2_renderer
 from mrbob.rendering import render_structure
 from os import path
@@ -49,7 +50,7 @@ class Recipe(object):
         raise UserError(msg)
 
     def _run_mrbob(self):
-        template = self.bobtemplate
+        template = parse_template(self.bobtemplate)[0]
         output_dir = self.webpack_directory
         variables = self.options
         verbose = True
