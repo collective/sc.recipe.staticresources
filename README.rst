@@ -19,6 +19,8 @@ In the recent years, many tools were created to manage static resource files, th
 
 This package has the dutty to facilitates the integration of Webpack with Plone, writing less lines into your buildout configuration and provide a nice template to start with.
 
+We choose Webpack because it is proven to be the best toolchain available, and many people in the Plone Community are using it.
+
 Mostly Harmless
 ---------------
 
