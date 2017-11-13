@@ -2,7 +2,6 @@
 from sc.recipe.staticresources import Recipe
 from shutil import rmtree
 from tempfile import mkdtemp
-from testfixtures import OutputCapture
 
 import os
 import unittest
@@ -62,53 +61,39 @@ class RecipeTestCase(unittest.TestCase):
 
     def test_custom_directory(self):
         options = self.options
-        directory = '/opt/recipe/webpack'
+        directory = '/tmp/webpack'
         options['directory'] = directory
         static_resources = self._get_recipe(None, None, options)
         self.assertEqual(static_resources.options['directory'], directory)
+        static_resources.install()
+        self.assertTrue(os.path.exists(directory))
+        rmtree(directory)
 
-    def test_hooks_folder_being_created(self):
-        with OutputCapture() as out:  # noqa F841
-            self.static_resources.install()
-            # out.compare('Install Git pre-commit hook.')
+    def test_custom_destination(self):
+        options = self.options
+        destination = '/tmp/static'
+        options['destination'] = destination
+        static_resources = self._get_recipe(None, None, options)
+        self.assertEqual(static_resources.options['destination'], destination)
+        self.static_resources.install()
+        os.mkdir(destination)
+        os.system('{0}/bin/build-mypackagename'.format(self.test_dir))
+        self.assertTrue(os.path.exists(destination))
+        rmtree(destination)
+
+    def test_custom_bobtemplate(self):
+        options = self.options
+        bobtemplate = (
+            'https://github.com/simplesconsultoria/sc.recipe.staticresources/'
+            'archive/master.zip#sc.recipe.staticresources-master/src/sc/'
+            'recipe/staticresources/bobtemplate'
+        )
+        options['bobtemplate'] = bobtemplate
+        static_resources = self._get_recipe(None, None, options)
+        self.assertEqual(static_resources.options['bobtemplate'], bobtemplate)
+        static_resources.install()
+        self.assertTrue(os.path.exists(options['directory']))
+
+    def test_template_folder_being_created(self):
+        self.static_resources.install()
         self.assertTrue(os.path.exists('{0}/webpack'.format(self.test_dir)))
-
-    # def test_egg(self):
-    #     self.assertTrue(self.static_resources.egg)
-
-    # def test_location(self):
-    #     location = '{0}/{1}'.format(
-    #         self.buildout_options['buildout']['parts-directory'],
-    #         self.name
-    #     )
-    #     self.assertEqual(
-    #         self.static_resources.options['location'],
-    #         location
-    #     )
-
-    # def test_extensions_default(self):
-    #     self.assertEqual(
-    #         self.static_resources.extensions,
-    #         ['flake8>=2.0.0', ]
-    #     )
-
-    # def test_extensions_no_flake8(self):
-    #     self.options['flake8'] = False
-    #     self.static_resources = self._get_recipe()
-    #     self.assertEqual(self.static_resources.extensions, [])
-
-    # def test_extensions_flake8_plugins(self):
-    #     self.options['flake8-extensions'] = 'pep8-naming\nflake8-todo'
-    #     self.static_resources = self._get_recipe()
-    #     self.assertEqual(
-    #         self.static_resources.extensions,
-    #         ['flake8>=2.0.0', 'pep8-naming', 'flake8-todo']
-    #     )
-
-    # def test_extensions_flake8_empty_plugins(self):
-    #     self.options['flake8-extensions'] = '\n\n'
-    #     self.static_resources = self._get_recipe()
-    #     self.assertEqual(
-    #         self.static_resources.extensions,
-    #         ['flake8>=2.0.0', ]
-    #     )

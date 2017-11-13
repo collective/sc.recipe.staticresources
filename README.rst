@@ -50,18 +50,6 @@ To enable this product in a buildout-based installation:
     name = my.package.name
     short_name = mypackagename
 
-    # Relative path to webpack folder
-    # If this option is not present, the default value is ${buildout:directory}/webpack
-    directory = src/my.package.name/webpack
-
-    # Destination path relative to webpack directory
-    # If this option is not present, the default value is ${buildout:directory}/webpack/dist
-    destination = ../src/my/package/name/static
-
-    # Custom webpack bobtemplate path
-    # If this option is not present, the default value is the bobtemplate that exists into this package
-    bobtemplate = bobtemplate
-
 After updating the configuration you need to run ''bin/buildout'', which will take care of updating your system.
 
 The recipe is responsible to:
@@ -69,6 +57,29 @@ The recipe is responsible to:
 a. Create webpack folder structure, if not exists
 b. Create one script to access webpack environment to handle more complex scenarios.
 c. Create all scripts listed in webpack/package.json scripts entries.
+
+Configuration Options
+^^^^^^^^^^^^^^^^^^^^^
+
+name (required)
+===============
+This is the package name or the theme name used in the package.  This field is required.
+
+short_name (required)
+=====================
+A short name is needed to be used as the UMD Javascript library name and the name of the script inserted into Plone.  This field is required.
+
+directory
+=========
+Relative path to webpack folder, you can use this field to define more than one webpack folder for different themes.  If this option is not present, the default value is ${buildout:directory}/webpack.
+
+destination
+===========
+Destination path relative to webpack directory, you should add this option to point the resulting static resources folder, it can be the theme folder or a static resources directory.  If this option is not present, the default value is ./dist folder.
+
+bobtemplate
+===========
+Custom webpack bobtemplate path, if you prefer, it is possible to change the default bobtemplate to another to follow your project needs. If this option is not present, the default value is the bobtemplate that exists into this package.
 
 Usage
 ^^^^^
