@@ -9,6 +9,16 @@ Life, the Universe, and Everything
 
 This package is used as a recipe to integrate Plone and Webpack using buildout.
 
+In the recent years, many tools were created to manage static resource files, these tools can:
+
+* Automatically compress images.
+* Use CSS Pre-processors and Post-processors to write less and better code, taking advantage of new standards still not available to all browsers.
+* Use Javascript transpiller to write ES6 code and generate ES5 equivalent code, that work on all browsers.
+* Minify resulting code.
+* And many other options, pratically everything related to process static resources can be achived by an official or community package.
+
+This package has the dutty to facilitates the integration of Webpack with Plone, writing less lines into your buildout configuration and provide a nice template to start with.
+
 Mostly Harmless
 ---------------
 
