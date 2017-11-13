@@ -23,7 +23,6 @@
     "postcss": "^5.2.11",
     "postcss-cssnext": "^2.9.0",
     "postcss-loader": "^1.2.2",
-    "shufflejs": "^5.0.1",
     "svg-url-loader": "^2.0.1",
     "webpack-spritesmith": "^0.3.3"
   }
