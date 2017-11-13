@@ -8,7 +8,7 @@ cache:
 matrix:
   fast_finish: true
 install:
-  - python bootstrap.py --buildout-version=2.5.3 --setuptools-version=20.1.1
+  - python bootstrap.py --buildout-version=2.9.5 --setuptools-version=36.6.0
   - bin/buildout annotate
   - bin/buildout
 script:
