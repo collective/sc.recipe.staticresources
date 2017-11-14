@@ -1,7 +1,7 @@
 var SpritesmithPlugin = require('webpack-spritesmith');
 module.exports = {
   entry: [
-    './app/{{{short_name}}}.less',
+    './app/{{{short_name}}}.scss',
     './app/{{{short_name}}}.js',
   ],
   output: {
@@ -34,7 +34,7 @@ module.exports = {
       exclude: /(\/node_modules\/|test\.js$|\.spec\.js$)/,
       use: 'babel-loader',
     }, {
-      test: /\.less$/,
+      test: /\.scss$/,
       use: [
         {
           loader: 'file-loader',
@@ -45,7 +45,7 @@ module.exports = {
         'extract-loader',
         'css-loader',
         'postcss-loader',
-        'less-loader'
+        'sass-loader'
       ]
     }, {
       test: /.*\.(gif|png|jpe?g)$/i,
@@ -91,7 +91,7 @@ module.exports = {
       },
       target: {
         image: 'app/img/sprite.png',
-        css: 'app/less/sprite.less'
+        css: 'app/scss/_sprite.scss'
       },
       apiOptions: {
         cssImageRef: './img/sprite.png'
