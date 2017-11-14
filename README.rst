@@ -117,9 +117,9 @@ Babel transpiller
 =================
 `Babel <https://babeljs.io/>`_ makes possible to use the next generation of Javascript today.
 
-Less
+Sass
 ====
-`Less <http://lesscss.org/>`_ extends the CSS language, adding features that allow variables, mixins, functions and many other techniques that allow you to make CSS that is more maintainable, themeable and extendable.
+`Sass <http://sass-lang.com/>`_ is the most mature, stable, and powerful professional grade CSS extension language in the world.
 
 PostCSS
 =======
