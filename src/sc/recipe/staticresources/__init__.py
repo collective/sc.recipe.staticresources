@@ -80,7 +80,7 @@ class Recipe(object):
             )
             output.write(data)
         subprocess.call(['chmod', '775', out_file])
-        print('Install ' + script_name)  # noqa: T003
+        self.logger.info('Install ' + script_name)
 
     def install(self):
         if not path.isdir(self.webpack_directory):
