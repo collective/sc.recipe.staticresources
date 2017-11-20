@@ -3,20 +3,23 @@ python: 2.7
 sudo: false
 cache:
   directories:
+  - $HOME/.pylint.d
   - eggs
   - parts/node
 matrix:
   fast_finish: true
+before_install:
+- pip install coveralls pylint
 install:
-  - python bootstrap.py --buildout-version=2.9.5 --setuptools-version=36.6.0
+  - python bootstrap.py
   - bin/buildout annotate
   - bin/buildout
 script:
   - bin/code-analysis
   - bin/test
+  - pylint --py3k --disable=no-absolute-import src/sc/recipe/staticresources
 after_success:
-  - bin/createcoverage run bin/test
-  - pip install -q coveralls
+  - bin/createcoverage --output-dir=htmlcov
   - coveralls
 after_failure:
   - bin/csslint --version
