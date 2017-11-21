@@ -6,10 +6,18 @@ module.exports = {
   ],
   output: {
     filename: '{{{short_name}}}.js',
-    path: __dirname + '/{{{destination}}}',
+    library: '{{{short_name}}}',
     libraryTarget: 'umd',
-    publicPath: '/++theme++{{{name}}}/',
-    library: '{{{short_name}}}'
+    path: __dirname + '/{{{destination}}}',
+    pathinfo: true,
+    publicPath: '/++theme++{{{name}}}/'
+  },
+  resolve: {
+    extensions: ['.js'],
+    modules: [
+      __dirname,
+      __dirname + './node_modules'
+    ]
   },
   module: {
     rules: [{

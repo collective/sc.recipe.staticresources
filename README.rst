@@ -154,4 +154,10 @@ This does the same as watch command, but don't try to minify the final CSS and J
 
 This command build the CSS and JS minified, but don't wait for any change.
 
+.. code-block:: bash
+
+    $ bin/test-mypackagename
+
+This command run the JS tests using `karma <https://karma-runner.github.io>`_, `mocha <https://mochajs.org/>`_, `chai <http://chaijs.com/>`_ and `sinon <http://sinonjs.org/>`_.
+
 Note that the short_name is added in the end of the script, this way you can have multiple webpack folders in the same package (if you have multiple themes inside the same package for example).
