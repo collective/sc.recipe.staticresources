@@ -22,7 +22,7 @@ setup(name='sc.recipe.staticresources',
       description=description,
       long_description=long_description,
       classifiers=[
-          'Development Status :: 1 - Planning',
+          'Development Status :: 3 - Alpha',
           'Framework :: Buildout',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
