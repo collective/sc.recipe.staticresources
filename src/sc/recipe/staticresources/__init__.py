@@ -83,6 +83,10 @@ class Recipe(object):
         self.logger.info('Install ' + script_name)
 
     def install(self):
+        # check if previous directory exists
+        if not path.isdir(path.dirname(self.webpack_directory)):
+            self.logger.error('Please check if this is a valid directory.')
+            return
         if not path.isdir(self.webpack_directory):
             self._run_mrbob()
 
