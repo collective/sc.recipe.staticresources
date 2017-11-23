@@ -4,6 +4,9 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
+- Run build command after update recipe (closes `#18 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/18>`_).
+  [rodfersou]
+
 - Add an error log if directory parameter is invalid.
   [rodfersou]
 
