@@ -156,7 +156,7 @@ This command set the buildout node installation in the system PATH, this way you
 
     $ bin/watch-mypackagename
 
-This command makes Webpack wait for any change in any LESS, JS (ES6) files and generate the minified version of CSS and JS (ES5) UMD module for your application.
+This command makes Webpack wait for any change in any SASS, JS (ES6) files and generate the minified version of CSS and JS (ES5) UMD module for your application.
 
 .. code-block:: console
 
