@@ -4,6 +4,9 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
+- Fix webpack installation conflict (closes `#25 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/25>`_).
+  [rodfersou]
+
 - Fix package license typo on template.
   [hvelarde]
 

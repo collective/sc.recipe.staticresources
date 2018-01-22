@@ -57,8 +57,8 @@ To enable this product in a buildout-based installation:
     [webpack]
     recipe = gp.recipe.node
     version = 6.6.0
-    npms = npm yarn webpack@3
-    scripts = npm yarn webpack
+    npms = npm yarn
+    scripts = npm yarn
 
     [staticresources]
     recipe = sc.recipe.staticresources

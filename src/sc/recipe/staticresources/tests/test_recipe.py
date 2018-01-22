@@ -11,7 +11,7 @@ class RecipeTestCase(unittest.TestCase):
 
     def setUp(self):
         test_dir = os.path.realpath(mkdtemp())
-        for directory in ('bin', 'parts', 'eggs', 'develop-eggs', ):
+        for directory in ('bin', 'parts', 'eggs', 'develop-eggs'):
             os.makedirs('{0}/{1}'.format(test_dir, directory))
 
         self.buildout_options = {
@@ -49,7 +49,7 @@ class RecipeTestCase(unittest.TestCase):
         return Recipe(
             buildout_options,
             name,
-            options
+            options,
         )
 
     def test_minimal_options(self):
