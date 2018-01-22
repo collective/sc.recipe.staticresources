@@ -4,6 +4,9 @@ Changelog
 1.0a2 (unreleased)
 ------------------
 
+- Rename script to debug instead of dev to avoid misunderstanding (closes `#22 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/22>`_).
+  [rodfersou]
+
 - Fix webpack installation conflict (closes `#25 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/25>`_).
   [rodfersou]
 

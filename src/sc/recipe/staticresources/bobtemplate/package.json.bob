@@ -4,7 +4,7 @@
   "main": "app/{{{short_name}}}.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -p",
-    "dev": "./node_modules/.bin/webpack --watch",
+    "debug": "./node_modules/.bin/webpack --watch",
     "watch": "./node_modules/.bin/webpack -p --watch",
     "test": "NODE_ENV=testing ./node_modules/.bin/karma start --single-run"
   },
