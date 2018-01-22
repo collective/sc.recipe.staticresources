@@ -160,7 +160,7 @@ This command makes Webpack wait for any change in any SASS, JS (ES6) files and g
 
 .. code-block:: console
 
-    $ bin/dev-mypackagename
+    $ bin/debug-mypackagename
 
 This does the same as watch command, but don't try to minify the final CSS and JS.  Used for debug purpose.
 
