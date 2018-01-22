@@ -76,7 +76,7 @@ class Recipe(object):
             data = SCRIPT_TEMPLATE.format(
                 bin_directory=self.bin_directory,
                 webpack_directory=self.webpack_directory,
-                command=command
+                command=command,
             )
             output.write(data)
         subprocess.call(['chmod', '775', out_file])
