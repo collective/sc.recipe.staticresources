@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from glob import glob
 from mrbob.configurator import parse_template
 from mrbob.rendering import jinja2_renderer
 from mrbob.rendering import render_structure
@@ -82,14 +83,11 @@ class Recipe(object):
         subprocess.call(['chmod', '775', out_file])
         self.logger.info('Install ' + script_name)
 
-    def install(self):
-        # check if previous directory exists
-        if not path.isdir(path.dirname(self.webpack_directory)):
-            self.logger.error('Please check if this is a valid directory.')
-            return
-        if not path.isdir(self.webpack_directory):
-            self._run_mrbob()
+    def _remove_old_scritps(self):
+        for script in glob(self.bin_directory + '/*-' + self.short_name):
+            os.remove(script)
 
+    def _create_new_scripts(self):
         with open(self.webpack_directory + '/package.json') as data_file:
             package_json = json.load(data_file)
 
@@ -100,6 +98,18 @@ class Recipe(object):
 
         if 'build' in package_json['scripts']:
             subprocess.call(self.bin_directory + '/build-' + self.short_name)
+
+    def install(self):
+        # check if previous directory exists
+        if not path.isdir(path.dirname(self.webpack_directory)):
+            self.logger.error('Please check if this is a valid directory.')
+            return
+
+        if not path.isdir(self.webpack_directory):
+            self._run_mrbob()
+
+        self._remove_old_scritps()
+        self._create_new_scripts()
 
     def update(self):
         self.install()

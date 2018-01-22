@@ -97,3 +97,10 @@ class RecipeTestCase(unittest.TestCase):
     def test_template_folder_being_created(self):
         self.static_resources.install()
         self.assertTrue(os.path.exists('{0}/webpack'.format(self.test_dir)))
+
+    def test_remove_old_scritps(self):
+        self.static_resources.install()
+        self.assertTrue(os.path.exists('{0}/bin/build-mypackagename'.format(self.test_dir)))
+
+        self.static_resources._remove_old_scritps()
+        self.assertFalse(os.path.exists('{0}/bin/build-mypackagename'.format(self.test_dir)))
