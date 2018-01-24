@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a2 (unreleased)
+1.0a2 (2018-01-24)
 ------------------
 
 - Review how HTML and CSS are processed (closes `#23 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/23>`_).
