@@ -1,4 +1,8 @@
-var SpritesmithPlugin = require('webpack-spritesmith');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const SpritesmithPlugin = require('webpack-spritesmith');
+
+
 module.exports = {
   entry: [
     './app/{{{short_name}}}.scss',
@@ -8,53 +12,35 @@ module.exports = {
     filename: '{{{short_name}}}.js',
     library: '{{{short_name}}}',
     libraryTarget: 'umd',
-    path: __dirname + '/{{{destination}}}',
+    path: `${__dirname}/{{{destination}}}`,
+    // path: `src/{{{name.replace('.', '/')}}}/browser/static`,
+    // path: `src/{{{name.replace('.', '/')}}}/theme/src`,
     pathinfo: true,
-    publicPath: '/++theme++{{{name}}}/'
+    // publicPath: '++theme++{{{name}}}/',
+    // publicPath: '++resource++{{{name}}}/',
   },
   resolve: {
     extensions: ['.js'],
     modules: [
       __dirname,
-      __dirname + './node_modules'
+      `${__dirname}/node_modules`,
     ]
   },
   module: {
     rules: [{
-      test: /\.html$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[name].[ext]',
-          }
-        },
-        'extract-loader',
-        {
-          loader: 'html-loader',
-          options: {
-            minimize: false
-          }
-        },
-      ]
-    }, {
       test: /\.js$/,
       exclude: /(\/node_modules\/|test\.js$|\.spec\.js$)/,
       use: 'babel-loader',
     }, {
       test: /\.scss$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[name].css',
-          }
-        },
-        'extract-loader',
-        'css-loader',
-        'postcss-loader',
-        'sass-loader'
-      ]
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
+      }),
     }, {
       test: /.*\.(gif|png|jpe?g)$/i,
       use: [
@@ -62,7 +48,7 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[path][name].[ext]',
-            context: 'app/'
+            context: 'app/',
           }
         },
         {
@@ -73,13 +59,13 @@ module.exports = {
             },
             pngquant: {
               quality: '65-90',
-              speed: 4
+              speed: 4,
             },
             gifsicle: {
-              interlaced: false
+              interlaced: false,
             },
             optipng: {
-              optimizationLevel: 7
+              optimizationLevel: 7,
             }
           }
         }
@@ -87,23 +73,31 @@ module.exports = {
     }, {
       test: /\.svg/,
       exclude: /node_modules/,
-      use: 'svg-url-loader'
+      use: 'svg-url-loader',
     }]
   },
   devtool: 'source-map',
   plugins: [
+    new ExtractTextPlugin({
+      filename: '{{{short_name}}}.css',
+      allChunks: true
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'app/index.html',
+    }),
     new SpritesmithPlugin({
       src: {
         cwd: 'app/sprite',
-        glob: '*.png'
+        glob: '*.png',
       },
       target: {
         image: 'app/img/sprite.png',
-        css: 'app/scss/_sprite.scss'
+        css: 'app/scss/_sprite.scss',
       },
       apiOptions: {
-        cssImageRef: './img/sprite.png'
+        cssImageRef: './img/sprite.png',
       }
-    })
+    }),
   ]
 }
