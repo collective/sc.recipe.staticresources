@@ -4,7 +4,8 @@ Changelog
 1.0a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Update package versions.
+  [rodfersou]
 
 
 1.0a2 (2018-01-24)
