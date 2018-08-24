@@ -4,7 +4,7 @@ Changelog
 1.0a3 (unreleased)
 ------------------
 
-- Change template to use package Known Good Sources (KGS).
+- Change template to use a package Known-Good-Set (KGS).
   [rodfersou]
 
 - Update package versions.
