@@ -57,7 +57,8 @@ To enable this product in a buildout-based installation:
     [node]
     recipe = gp.recipe.node
     version = 8.11.2
-    npms = npm yarn
+    npms += npm yarn
+    scripts += npm yarn
 
     [staticresources]
     recipe = sc.recipe.staticresources
