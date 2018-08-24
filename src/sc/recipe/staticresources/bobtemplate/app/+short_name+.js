@@ -1,5 +1,11 @@
 import { getSpecialValue } from './js/filea';
 
-export function getValue() {
+
+let getValue = () => {
     return getSpecialValue() * 2;
+}
+
+
+export default {
+  getValue,
 }

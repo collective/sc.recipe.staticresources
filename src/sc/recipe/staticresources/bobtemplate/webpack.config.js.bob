@@ -1,6 +1,17 @@
+// const childProcess = require('child_process');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpritesmithPlugin = require('webpack-spritesmith');
+
+
+const path = `${__dirname}/{{{destination}}}`;
+// const path = `${__dirname}/../src/{{{name.replace('.', '/')}}}/browser/static`;
+// const path = `${__dirname}/../src/{{{name.replace('.', '/')}}}/theme`;
+
+// https://github.com/alleyinteractive/webpack-git-hash/issues/10
+// const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
+// const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+// childProcess.execSync(`rm -f ${path}/{{{short_name}}}-*`);
 
 
 module.exports = {
@@ -10,21 +21,14 @@ module.exports = {
   ],
   output: {
     filename: '{{{short_name}}}.js',
+    // filename: `{{{short_name}}}-${gitHash}.js`,
     library: '{{{short_name}}}',
+    libraryExport: 'default',
     libraryTarget: 'umd',
-    path: `${__dirname}/{{{destination}}}`,
-    // path: `${__dirname}/../src/{{{name.replace('.', '/')}}}/browser/static`,
-    // path: `${__dirname}/../src/{{{name.replace('.', '/')}}}/theme`,
+    path: path,
     pathinfo: true,
     // publicPath: '++theme++{{{name}}}/',
     // publicPath: '++resource++{{{name}}}/',
-  },
-  resolve: {
-    extensions: ['.js'],
-    modules: [
-      __dirname,
-      `${__dirname}/node_modules`,
-    ]
   },
   module: {
     rules: [{
@@ -80,6 +84,7 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin({
       filename: '{{{short_name}}}.css',
+      // filename: `{{{short_name}}}-${gitHash}.css`,
       allChunks: true
     }),
     new HtmlWebpackPlugin({
