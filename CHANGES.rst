@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a3 (unreleased)
+1.0b1 (2018-08-24)
 ------------------
 
 - Change template to use a package Known-Good-Set (KGS).
