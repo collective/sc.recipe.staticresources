@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.0rc1 (unreleased)
+1.0b2 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Create a module to reuse configuration.
+  [rodfersou]
 
 
 1.0b1 (2018-08-24)

@@ -1,111 +1,23 @@
-const childProcess = require('child_process');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const SpritesmithPlugin = require('webpack-spritesmith');
+const makeConfig = require('sc-recipe-staticresources');
 
 
-const path = `${__dirname}/{{{destination}}}`;
-// const path = `${__dirname}/../src/{{{name.replace('.', '/')}}}/browser/static`;
-// const path = `${__dirname}/../src/{{{name.replace('.', '/')}}}/theme`;
+module.exports = makeConfig(
+  '{{{name}}}',
+  '{{{short_name}}}',
 
-// https://github.com/alleyinteractive/webpack-git-hash/issues/10
-const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
-const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
-childProcess.execSync(`rm -f ${path}/{{{short_name}}}-*`);
+  // path
+  `${__dirname}/{{{destination}}}`,
+  // `${__dirname}/../src/{{{name.replace('.', '/')}}}/browser/static`,
+  // `${__dirname}/../src/{{{name.replace('.', '/')}}}/theme`,
 
+  //publicPath
+  '',
+  // '++resource++{{{name}}}/',
+  // '++theme++{{{name}}}/',
 
-module.exports = {
-  entry: [
-    './app/{{{short_name}}}.scss',
-    './app/{{{short_name}}}.js',
-  ],
-  output: {
-    filename: `{{{short_name}}}-${gitHash}.js`,
-    library: '{{{short_name}}}',
-    libraryExport: 'default',
-    libraryTarget: 'umd',
-    path: path,
-    pathinfo: true,
-    // publicPath: '++resource++{{{name}}}/',
-    // publicPath: '++theme++{{{name}}}/',
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /(\/node_modules\/|test\.js$|\.spec\.js$)/,
-      use: 'babel-loader',
-    }, {
-      test: /\.scss$/,
-      use: ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [
-          'css-loader',
-          'postcss-loader',
-          'sass-loader'
-        ]
-      }),
-    }, {
-      test: /.*\.(gif|png|jpe?g)$/i,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            name: '[path][name].[ext]',
-            context: 'app/',
-          }
-        },
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            mozjpeg: {
-              progressive: true,
-            },
-            pngquant: {
-              quality: '65-90',
-              speed: 4,
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            optipng: {
-              optimizationLevel: 7,
-            }
-          }
-        }
-      ]
-    }, {
-      test: /\.svg/,
-      exclude: /node_modules/,
-      use: 'svg-url-loader',
-    }]
-  },
-  //devtool: 'source-map',
-  plugins: [
-    new ExtractTextPlugin({
-      filename: `{{{short_name}}}-${gitHash}.css`,
-      allChunks: true
-    }),
-    new HtmlWebpackPlugin({
-      inject: false,
-      filename: 'resources.pt',
-      template: 'app/resources.pt',
-    }),
-    //new HtmlWebpackPlugin({
-    //  filename: 'index.html',
-    //  template: 'app/index.html',
-    //}),
-    new SpritesmithPlugin({
-      src: {
-        cwd: 'app/sprite',
-        glob: '*.png',
-      },
-      target: {
-        image: 'app/img/sprite.png',
-        css: 'app/scss/_sprite.scss',
-      },
-      apiOptions: {
-        cssImageRef: './img/sprite.png',
-      }
-    }),
-  ]
-}
+  //extraEntries
+  [],
+
+  //extraPlugins
+  []
+);
