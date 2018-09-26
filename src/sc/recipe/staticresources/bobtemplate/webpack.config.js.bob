@@ -1,4 +1,4 @@
-// const childProcess = require('child_process');
+const childProcess = require('child_process');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpritesmithPlugin = require('webpack-spritesmith');
@@ -9,9 +9,9 @@ const path = `${__dirname}/{{{destination}}}`;
 // const path = `${__dirname}/../src/{{{name.replace('.', '/')}}}/theme`;
 
 // https://github.com/alleyinteractive/webpack-git-hash/issues/10
-// const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
-// const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
-// childProcess.execSync(`rm -f ${path}/{{{short_name}}}-*`);
+const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
+const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+childProcess.execSync(`rm -f ${path}/{{{short_name}}}-*`);
 
 
 module.exports = {
@@ -20,15 +20,14 @@ module.exports = {
     './app/{{{short_name}}}.js',
   ],
   output: {
-    filename: '{{{short_name}}}.js',
-    // filename: `{{{short_name}}}-${gitHash}.js`,
+    filename: `{{{short_name}}}-${gitHash}.js`,
     library: '{{{short_name}}}',
     libraryExport: 'default',
     libraryTarget: 'umd',
     path: path,
     pathinfo: true,
-    // publicPath: '++theme++{{{name}}}/',
     // publicPath: '++resource++{{{name}}}/',
+    // publicPath: '++theme++{{{name}}}/',
   },
   module: {
     rules: [{
@@ -80,17 +79,21 @@ module.exports = {
       use: 'svg-url-loader',
     }]
   },
-  devtool: 'source-map',
+  //devtool: 'source-map',
   plugins: [
     new ExtractTextPlugin({
-      filename: '{{{short_name}}}.css',
-      // filename: `{{{short_name}}}-${gitHash}.css`,
+      filename: `{{{short_name}}}-${gitHash}.css`,
       allChunks: true
     }),
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'app/index.html',
+      inject: false,
+      filename: 'resources.pt',
+      template: 'app/resources.pt',
     }),
+    //new HtmlWebpackPlugin({
+    //  filename: 'index.html',
+    //  template: 'app/index.html',
+    //}),
     new SpritesmithPlugin({
       src: {
         cwd: 'app/sprite',
