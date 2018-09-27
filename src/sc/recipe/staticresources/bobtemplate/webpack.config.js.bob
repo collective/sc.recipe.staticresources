@@ -2,7 +2,10 @@ const makeConfig = require('sc-recipe-staticresources');
 
 
 module.exports = makeConfig(
+  // name
   '{{{name}}}',
+
+  // shortName
   '{{{short_name}}}',
 
   // path
@@ -19,5 +22,5 @@ module.exports = makeConfig(
   [],
 
   //extraPlugins
-  []
+  [],
 );

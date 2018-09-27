@@ -135,6 +135,75 @@ This is the list of what we include:
     as soon as the browsers support more features,
     your final CSS will automatically cost less bytes.
 
+Javascript Helper
+-----------------
+To minimize the complexity when configure the addons that uses this package, there is a little helper created to simplify the configuration creation.  Let's see how to use this helper.
+
+1. Create a file package.json with the folloging:
+
+.. code-block:: json
+
+    {
+      "name": "my.package.name",
+      "version": "0.0.1",
+      "main": "app/mypackagename.js",
+      "scripts": {
+        "build": "./node_modules/.bin/webpack -p",
+        "debug": "NODE_ENV=debug ./node_modules/.bin/webpack --watch",
+        "watch": "./node_modules/.bin/webpack -p --watch",
+        "test": "NODE_ENV=testing ./node_modules/.bin/karma start --single-run"
+      },
+      "repository": {},
+      "license": "GPL-2.0",
+      "dependencies": {
+        "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.0b2"
+      }
+    }
+
+This way is possible to add every dependency of this configuration with just one line of dependency, and keep versions well tested across all ecosystem (the same our buildout KGS (know good source) do).
+
+2. Create a file webpack.config.js with the folloging:
+
+.. code-block:: javascript
+
+   const makeConfig = require('sc-recipe-staticresources');
+   const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+
+   module.exports = makeConfig(
+     // name
+     'my.package.name',
+
+     // shortName
+     'mypackagename',
+
+     // path
+     `${__dirname}/dist`,
+
+     //publicPath
+     `${__dirname}/../src/my/package/name/browser/static`,
+
+     //extraEntries
+     [
+       './app/img/img1.png',
+       './app/img/img2.png',
+       './app/img/img3.png',
+     ],
+
+     //extraPlugins
+     [
+       new CopyWebpackPlugin([{
+         from: 'app/folder/*',
+         to: 'folder',
+         flatten: true
+       }]),
+     ],
+   );
+
+This way is possible to inherit a good configuration of all addons in the current version.  Of course you can modify the generated object the way you need in your addon, but for most of the themes and addons used by this package the configuration becomes a lot easier (the idea behind it is the same we know in buildout when extend configuration).
+
+Our bob template generates these configuration when first run the recipe, needind just to fine tuning with our needs.
+
 Usage
 -----
 
