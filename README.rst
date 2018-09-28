@@ -7,21 +7,20 @@ sc.recipe.staticresources
 Life, the Universe, and Everything
 ==================================
 
-This package is used as a recipe to integrate Plone and `webpack <https://webpack.js.org/>`_ using Buildout.
+This Buildout recipe is used to integrate Plone and `webpack <https://webpack.js.org/>`_.
 
-In the recent years, many tools were created to manage static resource files, these tools can:
+In recent years, many tools were created to manage static resource files, these tools can:
 
 * automatically compress images
 * use CSS pre and post-processors to write less and better code, taking advantage of new standards still not available to all browsers
 * use JavaScript transpilers to write ES6 code and generate ES5 equivalent code, that works on all browsers
 * minify the resulting code
 
-And many other options, pratically everything related to process static resources can be achived by an official or community package.
+And many other options, practically everything related to process static resources can be achived by an official or community package.
 
-This package facilitates the integration of webpack with Plone,
-writing less lines into your Buildout configuration and providing a nice template to start with.
+This recipe let's you write less lines into your Buildout configuration and provides a nice template to start with.
 
-We choose webpack because it's proven to be the best toolchain available, and many people in the Plone community are using it.
+We choose `webpack`_ because it's proven to be the best toolchain available, and many people in the Plone community are already using it.
 
 Mostly Harmless
 ===============
@@ -62,16 +61,16 @@ To enable this product in a buildout-based installation:
 
     [staticresources]
     recipe = sc.recipe.staticresources
-    name = my.package.name
-    short_name = mypackagename
+    name = my.package
+    short_name = mypackage
 
 After updating the configuration you need to run ''bin/buildout'', which will take care of updating your system.
 
 The recipe is responsible for:
 
-* creating the webpack folder structure, if none exists
-* creating the script to access webpack environment to handle more complex scenarios
-* create all scripts listed in webpack/package.json scripts entries.
+* creating the `webpack`_ folder structure, if none exists
+* creating the script to access `webpack`_ environment to handle more complex scenarios
+* create all scripts listed in ``webpack/package.json`` scripts entries.
 
 Configuration options
 ---------------------
@@ -135,18 +134,19 @@ This is the list of what we include:
     as soon as the browsers support more features,
     your final CSS will automatically cost less bytes.
 
-Javascript Helper
+JavaScript Helper
 -----------------
-To minimize the complexity when configure the addons that uses this package, there is a little helper created to simplify the configuration creation.  Let's see how to use this helper.
+There's a little helper created to simplify the configuration burden of add-ons that use this recipe.
+Let's see how to use it:
 
-1. Create a file package.json with the folloging:
+1. Create a ``package.json`` file with the following:
 
 .. code-block:: json
 
     {
-      "name": "my.package.name",
+      "name": "my.package",
       "version": "0.0.1",
-      "main": "app/mypackagename.js",
+      "main": "app/mypackage.js",
       "scripts": {
         "build": "./node_modules/.bin/webpack -p",
         "debug": "NODE_ENV=debug ./node_modules/.bin/webpack --watch",
@@ -160,28 +160,28 @@ To minimize the complexity when configure the addons that uses this package, the
       }
     }
 
-This way is possible to add every dependency of this configuration with just one line of dependency, and keep versions well tested across all ecosystem (the same our buildout KGS (know good source) do).
+This way it's possible to add all dependencies of the configuration with just one line,
+keeping versions well tested across all ecosystems just like Buildout's versions do.
 
-2. Create a file webpack.config.js with the folloging:
+2. Create a ``webpack.config.js`` file with the following:
 
 .. code-block:: javascript
 
    const makeConfig = require('sc-recipe-staticresources');
    const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
    module.exports = makeConfig(
      // name
-     'my.package.name',
+     'my.package',
 
      // shortName
-     'mypackagename',
+     'mypackage',
 
      // path
      `${__dirname}/dist`,
 
      //publicPath
-     `${__dirname}/../src/my/package/name/browser/static`,
+     `${__dirname}/../src/my/package/browser/static`,
 
      //extraEntries
      [
@@ -200,9 +200,11 @@ This way is possible to add every dependency of this configuration with just one
      ],
    );
 
-This way is possible to inherit a good configuration of all addons in the current version.  Of course you can modify the generated object the way you need in your addon, but for most of the themes and addons used by this package the configuration becomes a lot easier (the idea behind it is the same we know in buildout when extend configuration).
+This way it's possible to inherit a configuration of all dependencies in the current version.
 
-Our bob template generates these configuration when first run the recipe, needind just to fine tuning with our needs.
+Our mrbob template generates this configuration when the recipe is run for the first time.
+You can modify it to fit your needs,
+but for most themes and add-ons these defaults are a good starting point (something similar to Buildout's extend configuration).
 
 Usage
 -----
@@ -211,32 +213,32 @@ In our simplest example, the following scripts are created:
 
 .. code-block:: console
 
-    $ bin/env-mypackagename
+    $ bin/env-mypackage
 
 This command sets the buildout node installation in the system PATH, this way you can use webpack as described in their docs.
 
 .. code-block:: console
 
-    $ bin/watch-mypackagename
+    $ bin/watch-mypackage
 
 This command makes webpack wait for any change in any SASS, JS (ES6) files and generates the minified version of CSS and JS (ES5) UMD module for your application.
 
 .. code-block:: console
 
-    $ bin/debug-mypackagename
+    $ bin/debug-mypackage
 
 This does the same as watch command, but don't try to minify the final CSS and JS.
 Used for debug purposes.
 
 .. code-block:: console
 
-    $ bin/build-mypackagename
+    $ bin/build-mypackage
 
 This command builds the CSS and JS minified, but doesn't wait for any change.
 
 .. code-block:: console
 
-    $ bin/test-mypackagename
+    $ bin/test-mypackage
 
 This command runs the JavaScript tests using `karma <https://karma-runner.github.io>`_, `mocha <https://mochajs.org/>`_, `chai <http://chaijs.com/>`_ and `sinon <http://sinonjs.org/>`_.
 
