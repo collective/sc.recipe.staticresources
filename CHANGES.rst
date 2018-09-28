@@ -1,8 +1,8 @@
 Changelog
 =========
 
-1.0b2 (unreleased)
--------------------
+1.1b1 (2018-09-28)
+------------------
 
 - Create a module to reuse configuration.
   [rodfersou]
