@@ -35,9 +35,8 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
       filename: `${shortName}-${gitHash}.js`,
       library: shortName,
       libraryExport: 'default',
-      libraryTarget: 'umd',
+      libraryTarget: 'var',
       path: path,
-      pathinfo: true,
       publicPath: publicPath,
     },
     module: {

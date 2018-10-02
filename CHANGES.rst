@@ -4,6 +4,8 @@ Changelog
 1.1b2 (unreleased)
 ------------------
 
+- Fix library definition to work with Plone 5.
+  [thet, rodfersou]
 - Emit current package version in package.json configuration (closes `#40 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/40>`_).
   [rodfersou]
 
