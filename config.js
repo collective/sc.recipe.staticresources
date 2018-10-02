@@ -98,20 +98,6 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
         filename: `${shortName}-${gitHash}.css`,
         allChunks: true
       }),
-      // Default Spritesmith configuration
-      new SpritesmithPlugin({
-        src: {
-          cwd: 'app/sprite',
-          glob: '*.png',
-        },
-        target: {
-          image: 'app/img/sprite.png',
-          css: 'app/scss/_sprite.scss',
-        },
-        apiOptions: {
-          cssImageRef: './img/sprite.png',
-        }
-      }),
     ]
   };
   // Add SCSS file if exists
@@ -144,6 +130,24 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
         filename: 'resources.pt',
         template: 'app/resources.pt',
       })
+    );
+  }
+  // Add spritesmith configuration
+  if (fs.existsSync('./app/sprite')) {
+    options.plugins.push(
+      new SpritesmithPlugin({
+        src: {
+          cwd: 'app/sprite',
+          glob: '*.png',
+        },
+        target: {
+          image: 'app/img/sprite.png',
+          css: 'app/scss/_sprite.scss',
+        },
+        apiOptions: {
+          cssImageRef: './img/sprite.png',
+        }
+      }),
     );
   }
   // Add extra plugins

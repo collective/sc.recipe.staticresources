@@ -4,6 +4,9 @@ Changelog
 1.1b2 (unreleased)
 ------------------
 
+- Review to add Sprite plugin just if necessary.
+  [rodfersou]
+
 - Review to add SCSS files just if necessary.
   [rodfersou]
 
