@@ -28,7 +28,6 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
 
   let options = {
     entry: [
-      `./app/${shortName}.scss`,
       `./app/${shortName}.js`,
     ],
     output: {
@@ -115,6 +114,11 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
       }),
     ]
   };
+  // Add SCSS file if exists
+  let scss = `./app/${shortName}.scss`;
+  if (fs.existsSync(scss)) {
+    options.entry.unshift(scss);
+  }
   // Add extra entries
   for (let entry of extraEntries) {
     options.entry.unshift(entry);
@@ -148,5 +152,6 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
   }
   return options;
 }
+
 
 module.exports = makeConfig;
