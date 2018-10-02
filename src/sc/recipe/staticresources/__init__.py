@@ -9,9 +9,11 @@ from zc.buildout import UserError
 import json
 import logging
 import os
+import pkg_resources
 import subprocess
 
 
+VERSION = pkg_resources.get_distribution('sc.recipe.staticresources').version
 CURRENT_DIR = path.dirname(__file__)
 SCRIPT_TEMPLATE = """#!/bin/sh
 export PATH={bin_directory}:$PATH
@@ -45,6 +47,7 @@ class Recipe(object):
         self.options.setdefault('destination', 'dist')
         self.options.setdefault('bobtemplate', path.join(CURRENT_DIR, 'bobtemplate'))
         self.bobtemplate = options['bobtemplate']
+        self.options.setdefault('version', VERSION)
 
     def _error(self, msg):
         self.logger.error(msg)
