@@ -4,6 +4,17 @@ Changelog
 1.1b2 (unreleased)
 ------------------
 
+- Review to add Sprite plugin just if necessary.
+  [rodfersou]
+
+- Review to add SCSS files just if necessary.
+  [rodfersou]
+
+- Use script async by default.
+  [rodfersou]
+
+- Fix library definition to work with Plone 5.
+  [thet, rodfersou]
 - Emit current package version in package.json configuration (closes `#40 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/40>`_).
   [rodfersou]
 

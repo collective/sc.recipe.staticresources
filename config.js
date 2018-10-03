@@ -18,26 +18,30 @@ const SpritesmithPlugin = require('webpack-spritesmith');
  * @return {Object}                Webpack configuration object
  */
 let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPlugins=[]) => {
+  this.name = name;
+  this.shortName = shortName;
+  this.path = path;
+  this.publicPath = publicPath;
+  this.extraEntries = extraEntries;
+  this.extraPlugins = extraPlugins;
   // Get git hash to add in the end of files
   // https://github.com/alleyinteractive/webpack-git-hash/issues/10
   const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
-  const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+  this.gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
 
   // Remove old static resources
   childProcess.execSync(`rm -f ${path}/${shortName}-*`);
 
   let options = {
     entry: [
-      `./app/${shortName}.scss`,
       `./app/${shortName}.js`,
     ],
     output: {
-      filename: `${shortName}-${gitHash}.js`,
+      filename: `${shortName}-${this.gitHash}.js`,
       library: shortName,
       libraryExport: 'default',
-      libraryTarget: 'umd',
+      libraryTarget: 'var',
       path: path,
-      pathinfo: true,
       publicPath: publicPath,
     },
     module: {
@@ -97,25 +101,16 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
     plugins: [
       // Default CSS generation configuration
       new ExtractTextPlugin({
-        filename: `${shortName}-${gitHash}.css`,
+        filename: `${shortName}-${this.gitHash}.css`,
         allChunks: true
-      }),
-      // Default Spritesmith configuration
-      new SpritesmithPlugin({
-        src: {
-          cwd: 'app/sprite',
-          glob: '*.png',
-        },
-        target: {
-          image: 'app/img/sprite.png',
-          css: 'app/scss/_sprite.scss',
-        },
-        apiOptions: {
-          cssImageRef: './img/sprite.png',
-        }
       }),
     ]
   };
+  // Add SCSS file if exists
+  let scss = `./app/${shortName}.scss`;
+  if (fs.existsSync(scss)) {
+    options.entry.unshift(scss);
+  }
   // Add extra entries
   for (let entry of extraEntries) {
     options.entry.unshift(entry);
@@ -143,11 +138,30 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
       })
     );
   }
+  // Add spritesmith configuration
+  if (fs.existsSync('./app/sprite')) {
+    options.plugins.push(
+      new SpritesmithPlugin({
+        src: {
+          cwd: 'app/sprite',
+          glob: '*.png',
+        },
+        target: {
+          image: 'app/img/sprite.png',
+          css: 'app/scss/_sprite.scss',
+        },
+        apiOptions: {
+          cssImageRef: './img/sprite.png',
+        }
+      }),
+    );
+  }
   // Add extra plugins
   for (let plugin of extraPlugins) {
     options.plugins.push(plugin);
   }
   return options;
 }
+
 
 module.exports = makeConfig;
