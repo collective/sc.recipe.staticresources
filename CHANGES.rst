@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1b4 (unreleased)
+1.1b4 (2018-10-03)
 ------------------
 
 - Fix in javascript helper.
