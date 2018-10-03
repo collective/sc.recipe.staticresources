@@ -1,10 +1,10 @@
 Changelog
 =========
 
-1.1b3 (unreleased)
+1.1b3 (2018-10-03)
 ------------------
 
-- Nothing changed yet.
+- Fix node package version
 
 
 1.1b2 (2018-10-03)

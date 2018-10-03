@@ -156,7 +156,7 @@ Let's see how to use it:
       "repository": {},
       "license": "GPL-2.0",
       "dependencies": {
-        "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b2"
+        "sc-recipe-staticresources": "simplesconsultoria/sc.recipe.staticresources#1.1b3"
       }
     }
 
