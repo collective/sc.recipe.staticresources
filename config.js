@@ -24,7 +24,7 @@ const SpritesmithPlugin = require('webpack-spritesmith');
  * @param  {tuneConfigCallback} callback   Callback used to finetune options
  * @return {Object}                        Webpack configuration object
  */
-let makeConfig = (name, shortName, path, publicPath, cb=null) => {
+let makeConfig = (name, shortName, path, publicPath, callback) => {
   // Get git hash to add in the end of files
   // https://github.com/alleyinteractive/webpack-git-hash/issues/10
   const gitCmd = 'git rev-list -1 HEAD -- `pwd`';

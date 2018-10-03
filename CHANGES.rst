@@ -4,13 +4,15 @@ Changelog
 1.1b4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix in javascript helper.
+  [rodfersou]
 
 
 1.1b3 (2018-10-03)
 ------------------
 
-- Fix node package version
+- Fix node package version.
+  [rodfersou]
 
 
 1.1b2 (2018-10-03)
