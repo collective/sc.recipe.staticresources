@@ -18,10 +18,16 @@ const SpritesmithPlugin = require('webpack-spritesmith');
  * @return {Object}                Webpack configuration object
  */
 let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPlugins=[]) => {
+  this.name = name;
+  this.shortName = shortName;
+  this.path = path;
+  this.publicPath = publicPath;
+  this.extraEntries = extraEntries;
+  this.extraPlugins = extraPlugins;
   // Get git hash to add in the end of files
   // https://github.com/alleyinteractive/webpack-git-hash/issues/10
   const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
-  const gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+  this.gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
 
   // Remove old static resources
   childProcess.execSync(`rm -f ${path}/${shortName}-*`);
@@ -31,7 +37,7 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
       `./app/${shortName}.js`,
     ],
     output: {
-      filename: `${shortName}-${gitHash}.js`,
+      filename: `${shortName}-${this.gitHash}.js`,
       library: shortName,
       libraryExport: 'default',
       libraryTarget: 'var',
@@ -95,7 +101,7 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
     plugins: [
       // Default CSS generation configuration
       new ExtractTextPlugin({
-        filename: `${shortName}-${gitHash}.css`,
+        filename: `${shortName}-${this.gitHash}.css`,
         allChunks: true
       }),
     ]
