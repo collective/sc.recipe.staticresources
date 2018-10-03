@@ -4,7 +4,8 @@ Changelog
 1.1b2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Emit current package version in package.json configuration (closes `#40 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/40>`_).
+  [rodfersou]
 
 
 1.1b1 (2018-09-28)
