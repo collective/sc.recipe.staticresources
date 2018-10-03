@@ -2,7 +2,7 @@
 from setuptools import find_packages
 from setuptools import setup
 
-version = '1.1b4'
+version = '1.1b5.dev0'
 description = 'FIXME'
 long_description = (
     open('README.rst').read() + '\n' +
