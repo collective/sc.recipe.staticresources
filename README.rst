@@ -183,21 +183,22 @@ keeping versions well tested across all ecosystems just like Buildout's versions
      //publicPath
      `${__dirname}/../src/my/package/browser/static`,
 
-     //extraEntries
-     [
-       './app/img/img1.png',
-       './app/img/img2.png',
-       './app/img/img3.png',
-     ],
-
-     //extraPlugins
-     [
-       new CopyWebpackPlugin([{
-         from: 'app/folder/*',
-         to: 'folder',
-         flatten: true
-       }]),
-     ],
+     //callback
+     function(config, options) {
+       config.entry.unshift(
+         './app/img/img1.png',
+         './app/img/img2.png',
+         './app/img/img3.png',
+       );
+       config.plugins.push(
+         new CopyWebpackPlugin([{
+           from: 'app/folder/*',
+           to: 'folder',
+           flatten: true
+         }]),
+       );
+       
+     },
    );
 
 This way it's possible to inherit a configuration of all dependencies in the current version.
