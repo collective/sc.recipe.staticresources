@@ -1,8 +1,11 @@
 Changelog
 =========
 
-1.1b2 (unreleased)
+1.1b2 (2018-10-03)
 ------------------
+
+- Use a callback to fine tune the configuration at javascript helper.
+  [rodfersou]
 
 - Review to add Sprite plugin just if necessary.
   [rodfersou]
