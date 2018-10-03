@@ -6,43 +6,53 @@ const SpritesmithPlugin = require('webpack-spritesmith');
 
 
 /**
+ * This callback type is called `tuneConfigCallback` and is displayed as a global symbol.
+ *
+ * @callback tuneConfigCallback
+ * @param {Object} config  The webpack configuration
+ * @param {Object} options Global options used in this function
+ */
+
+/**
  * Create a initial configuration for webpack
  *
  * @function makeConfig
- * @param  {string} name           The package name
- * @param  {string} shortName      The package short name
- * @param  {string} path           The path where the static files are generated
- * @param  {string} publicPath     The prefix that should be added in the beggining of the emmited files
- * @param  {string[]} extraEntries List of extra items to be inserted before default entries
- * @param  {Plugin[]} extraPlugins List of extra plugins to be inserted after default plugins
- * @return {Object}                Webpack configuration object
+ * @param  {string}             name       The package name
+ * @param  {string}             shortName  The package short name
+ * @param  {string}             path       The path where the static files are generated
+ * @param  {string}             publicPath The prefix that should be added in the beggining of the emmited files
+ * @param  {tuneConfigCallback} callback   Callback used to finetune options
+ * @return {Object}                        Webpack configuration object
  */
-let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPlugins=[]) => {
-  this.name = name;
-  this.shortName = shortName;
-  this.path = path;
-  this.publicPath = publicPath;
-  this.extraEntries = extraEntries;
-  this.extraPlugins = extraPlugins;
+let makeConfig = (name, shortName, path, publicPath, cb=null) => {
   // Get git hash to add in the end of files
   // https://github.com/alleyinteractive/webpack-git-hash/issues/10
-  const gitCmd = 'git rev-list -1 HEAD -- `pwd`'
-  this.gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+  const gitCmd = 'git rev-list -1 HEAD -- `pwd`';
+
+  let options = {};
+  options.name = name;
+  options.shortName = shortName;
+  options.path = path;
+  options.publicPath = publicPath;
+  options.gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
 
   // Remove old static resources
-  childProcess.execSync(`rm -f ${path}/${shortName}-*`);
+  childProcess.execSync(`rm -f ${options.path}/${options.shortName}-*`);
 
-  let options = {
+  let config = {
     entry: [
-      `./app/${shortName}.js`,
+      `./app/${options.shortName}.js`,
     ],
     output: {
-      filename: `${shortName}-${this.gitHash}.js`,
-      library: shortName,
+      filename: `${options.shortName}-${options.gitHash}.js`,
+      library: options.shortName,
       libraryExport: 'default',
       libraryTarget: 'var',
-      path: path,
-      publicPath: publicPath,
+      path: options.path,
+      publicPath: options.publicPath,
+    },
+    externals: {
+      jquery: 'jQuery',
     },
     module: {
       rules: [{
@@ -110,46 +120,44 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
     plugins: [
       // Default CSS generation configuration
       new ExtractTextPlugin({
-        filename: `${shortName}-${this.gitHash}.css`,
+        filename: `${options.shortName}-${options.gitHash}.css`,
         allChunks: true
       }),
     ]
   };
   // Add SCSS file if exists
-  let scss = `./app/${shortName}.scss`;
+  let scss = `./app/${options.shortName}.scss`;
   if (fs.existsSync(scss)) {
-    options.entry.unshift(scss);
-  }
-  // Add extra entries
-  for (let entry of extraEntries) {
-    options.entry.unshift(entry);
+    config.entry.unshift(scss);
   }
   // Create source maps if in debug mode
   if (process.env.NODE_ENV === 'debug') {
-    options.devtool = 'source-map';
+    config.devtool = 'source-map';
   }
   // Create index file (used for theme creation)
   if (fs.existsSync('app/index.html')) {
-    options.plugins.push(
+    config.plugins.push(
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: 'app/index.html',
+        publicPath: options.publicPath,
       })
     );
   }
   // Create resources file (used for addon creation)
   if (fs.existsSync('app/resources.pt')) {
-    options.plugins.push(
+    config.plugins.push(
       new HtmlWebpackPlugin({
         inject: false,
         filename: 'resources.pt',
         template: 'app/resources.pt',
+        publicPath: options.publicPath,
       })
     );
   }
   // Add spritesmith configuration
   if (fs.existsSync('./app/sprite')) {
-    options.plugins.push(
+    config.plugins.push(
       new SpritesmithPlugin({
         src: {
           cwd: 'app/sprite',
@@ -165,12 +173,11 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
       }),
     );
   }
-  // Add extra plugins
-  for (let plugin of extraPlugins) {
-    options.plugins.push(plugin);
+  if (typeof(callback) === 'function') {
+    callback(config, options);
   }
-  return options;
-}
+  return config;
+};
 
 
 module.exports = makeConfig;
