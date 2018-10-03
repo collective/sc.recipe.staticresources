@@ -63,7 +63,7 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
         }),
       }, {
         // Handle image optimization
-        test: /.*\.(gif|png|jpe?g)$/i,
+        test: /\.(gif|png|jpe?g)$/i,
         use: [
           {
             loader: 'file-loader',
@@ -91,6 +91,15 @@ let makeConfig = (name, shortName, path, publicPath='', extraEntries=[], extraPl
             }
           }
         ]
+      }, {
+        test: /\.(eot|svg|ttf|woff2?)$/,  
+        use: {    
+          loader: 'file-loader',  
+          options: {  
+            name: '[path][name].[ext]',   
+            context: 'app/'   
+          }   
+        } 
       }, {
         // Handle SVG files inline in CSS
         test: /\.svg/,
