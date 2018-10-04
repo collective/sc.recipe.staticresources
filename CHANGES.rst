@@ -4,7 +4,8 @@ Changelog
 1.1b5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix resources viewlet template generation.
+  [rodfersou]
 
 
 1.1b4 (2018-10-03)
