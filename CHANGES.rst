@@ -4,6 +4,9 @@ Changelog
 1.1b5 (unreleased)
 ------------------
 
+- Use postcss env plugin.
+  [rodfersou]
+
 - Add HardSourceWebpackPlugin.
   [rodfersou]
 
