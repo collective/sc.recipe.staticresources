@@ -1,6 +1,7 @@
 const fs = require('fs');
 const childProcess = require('child_process');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SpritesmithPlugin = require('webpack-spritesmith');
 
@@ -118,6 +119,8 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       }]
     },
     plugins: [
+      // Speed up module build
+      new HardSourceWebpackPlugin(),
       // Default CSS generation configuration
       new ExtractTextPlugin({
         filename: `${options.shortName}-${options.gitHash}.css`,

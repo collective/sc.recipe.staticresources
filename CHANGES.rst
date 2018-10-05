@@ -4,6 +4,9 @@ Changelog
 1.1b5 (unreleased)
 ------------------
 
+- Add HardSourceWebpackPlugin.
+  [rodfersou]
+
 - Fix resources viewlet template generation.
   [rodfersou]
 
