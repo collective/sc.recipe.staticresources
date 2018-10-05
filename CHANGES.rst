@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.1b5 (unreleased)
+1.1b5 (2018-10-05)
 ------------------
 
 - Replace deprecated ``cssnext`` module with `PostCSS Preset Env`_ (closes `#37 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/37>`_).
