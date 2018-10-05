@@ -4,20 +4,21 @@ Changelog
 1.1b5 (unreleased)
 ------------------
 
-- Use postcss env plugin.
+- Replace deprecated ``cssnext`` module with `PostCSS Preset Env`_ (closes `#37 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/37>`_).
   [rodfersou]
 
-- Add HardSourceWebpackPlugin.
+- Include `HardSourceWebpackPlugin`_ in default configuration;
+  this plugin provides an intermediate caching step for modules that can speed up bundle generation up to 70% (closes `#49 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/49>`_).
   [rodfersou]
 
-- Fix resources viewlet template generation.
+- Fix typo on resources viewlet template.
   [rodfersou]
 
 
 1.1b4 (2018-10-03)
 ------------------
 
-- Fix in javascript helper.
+- Fix in JavaScript helper.
   [rodfersou]
 
 
@@ -45,6 +46,7 @@ Changelog
 
 - Fix library definition to work with Plone 5.
   [thet, rodfersou]
+
 - Emit current package version in package.json configuration (closes `#40 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/40>`_).
   [rodfersou]
 
