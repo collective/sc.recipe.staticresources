@@ -48,6 +48,7 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       filename: `${options.shortName}-${options.gitHash}.js`,
       library: options.shortName,
       libraryExport: 'default',
+      // FIXME: https://github.com/collective/collective.lazysizes/issues/67
       libraryTarget: 'var',
       path: options.path,
       publicPath: options.publicPath,
