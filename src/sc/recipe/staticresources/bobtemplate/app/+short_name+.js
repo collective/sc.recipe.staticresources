@@ -6,6 +6,6 @@ let getValue = () => {
 }
 
 
-export default {
+export {
   getValue,
 }
