@@ -47,7 +47,6 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
     output: {
       filename: `${options.shortName}-${options.gitHash}.js`,
       library: options.shortName,
-      libraryExport: 'default',
       libraryTarget: 'var',
       path: options.path,
       publicPath: options.publicPath,
@@ -128,6 +127,10 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       }),
     ]
   };
+  // Change needed to run karma tests
+  if (process.env.NODE_ENV === 'testing') {
+    config.output.filename = '[name].js';
+  }
   // Add SCSS file if exists
   let scss = `./app/${options.shortName}.scss`;
   if (fs.existsSync(scss)) {
