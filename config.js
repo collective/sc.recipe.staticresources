@@ -36,6 +36,8 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
   options.path = path;
   options.publicPath = publicPath;
   options.gitHash = childProcess.execSync(gitCmd).toString().substring(0, 7);
+  options.ploneExcludes = /(\+\+resource\+\+|\+\+theme\+\+)/;
+  options.jsExcludes = /(\/node_modules\/|test\.js$|\.spec\.js$)/;
 
   // Remove old static resources
   childProcess.execSync(`rm -f ${options.path}/${options.shortName}-*`);
@@ -58,15 +60,23 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       rules: [{
         // Handle JS files
         test: /\.js$/,
-        exclude: /(\/node_modules\/|test\.js$|\.spec\.js$)/,
+        // https://stackoverflow.com/a/9213478
+        exclude: new RegExp(
+          `${options.ploneExcludes.source}|${options.jsExcludes.source}`),
         use: 'babel-loader',
       }, {
         // Handle SCSS files
         test: /\.scss$/,
+        exclude: options.ploneExcludes,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                url: (url, resourcePath) => options.ploneExcludes.test(url)
+              }
+            },
             'postcss-loader',
             'sass-loader'
           ]
@@ -74,6 +84,7 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       }, {
         // Handle image optimization
         test: /\.(gif|png|jpe?g)$/i,
+        exclude: options.ploneExcludes,
         use: [
           {
             loader: 'file-loader',
@@ -103,6 +114,7 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
         ]
       }, {
         test: /\.(eot|svg|ttf|woff2?)$/,  
+        exclude: options.ploneExcludes,
         use: {    
           loader: 'file-loader',  
           options: {  
@@ -113,7 +125,7 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
       }, {
         // Handle SVG files inline in CSS
         test: /\.svg/,
-        exclude: /node_modules/,
+        exclude: options.ploneExcludes,
         use: 'svg-url-loader',
       }]
     },

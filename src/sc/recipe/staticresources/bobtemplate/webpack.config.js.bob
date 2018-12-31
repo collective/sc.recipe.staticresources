@@ -19,6 +19,6 @@ module.exports = makeConfig(
   // '++theme++{{{name}}}/',
 
   //callback
-  function(config, options) {
+  (config, options) => {
   },
 );
