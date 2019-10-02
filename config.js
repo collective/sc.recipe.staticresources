@@ -74,7 +74,7 @@ let makeConfig = (name, shortName, path, publicPath, callback) => {
             {
               loader: 'css-loader',
               options: {
-                url: (url, resourcePath) => options.ploneExcludes.test(url)
+                url: (url, resourcePath) => !options.ploneExcludes.test(url)
               }
             },
             'postcss-loader',
