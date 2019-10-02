@@ -4,7 +4,6 @@ from shutil import rmtree
 from tempfile import mkdtemp
 
 import os
-import pkg_resources
 import unittest
 
 
@@ -47,6 +46,7 @@ class RecipeTestCase(unittest.TestCase):
             name = self.name
         if options is None:
             options = self.options
+        options['version'] = 'master'
         return Recipe(
             buildout_options,
             name,
@@ -59,9 +59,6 @@ class RecipeTestCase(unittest.TestCase):
         self.assertIn('directory', static_resources.options)
         directory = '{0}/webpack'.format(self.test_dir)
         self.assertEqual(static_resources.options['directory'], directory)
-        self.assertIn('version', static_resources.options)
-        version = pkg_resources.get_distribution('sc.recipe.staticresources').version
-        self.assertEqual(static_resources.options['version'], version)
 
     def test_custom_directory(self):
         options = self.options
