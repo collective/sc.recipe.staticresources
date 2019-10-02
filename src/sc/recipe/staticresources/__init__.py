@@ -10,10 +10,14 @@ import json
 import logging
 import os
 import pkg_resources
+import re
 import subprocess
 
 
 VERSION = pkg_resources.get_distribution('sc.recipe.staticresources').version
+if 'dev' in VERSION:
+    matched = re.match('(\d+\.\d+\w?)(\d+)(.*)', VERSION).groups()
+    VERSION = '{0}{1}'.format(matched[0], int(matched[1]) - 1)
 CURRENT_DIR = path.dirname(__file__)
 SCRIPT_TEMPLATE = """#!/bin/sh
 export PATH={bin_directory}:$PATH
