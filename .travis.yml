@@ -9,6 +9,7 @@ cache:
 matrix:
   fast_finish: true
 before_install:
+- pip uninstall configparser
 - pip install coveralls pylint
 install:
   - python bootstrap.py
