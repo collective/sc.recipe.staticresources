@@ -4,7 +4,11 @@ Changelog
 1.1b6 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Respect Plone external URL (closes `#44 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/44>`_).
+  [rodfersou]
+
+- Fixes on Karma tests.
+  [rodfersou]
 
 
 1.1b5 (2018-10-05)
