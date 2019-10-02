@@ -4,12 +4,6 @@ Changelog
 1.1b7 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
-
-1.1b6 (2019-10-02)
-------------------
-
 - Respect Plone external URL (closes `#44 <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues/44>`_).
   [rodfersou]
 

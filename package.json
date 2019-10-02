@@ -1,6 +1,6 @@
 {
   "name": "sc-recipe-staticresources",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "config.js",
   "license": "GPL-2.0",
   "dependencies": {
