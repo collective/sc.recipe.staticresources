@@ -9,7 +9,8 @@ cache:
 matrix:
   fast_finish: true
 before_install:
-- pip uninstall configparser
+# FIXME: I have no idea why it is already installed
+- pip uninstall -y configparser
 - pip install coveralls pylint
 install:
   - python bootstrap.py
