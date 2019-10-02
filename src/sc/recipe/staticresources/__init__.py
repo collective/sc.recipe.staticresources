@@ -14,6 +14,9 @@ import subprocess
 
 
 VERSION = pkg_resources.get_distribution('sc.recipe.staticresources').version
+if 'dev' in VERSION:
+    # This happen just in the CI
+    VERSION = 'master'
 CURRENT_DIR = path.dirname(__file__)
 SCRIPT_TEMPLATE = """#!/bin/sh
 export PATH={bin_directory}:$PATH
