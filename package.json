@@ -32,6 +32,12 @@
     "style-loader": "^0.21.0",
     "svg-url-loader": "^2.3.2",
     "webpack": "^3",
-    "webpack-spritesmith": "^0.5.2"
-  }
+    "webpack-spritesmith": "^0.5.2",
+    "snyk": "^1.316.1"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
