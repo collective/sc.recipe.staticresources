@@ -11,7 +11,8 @@ matrix:
 before_install:
 - pip install coveralls pylint configparser==3.5.3
 install:
-  - python bootstrap.py
+  - virtualenv -p `which python` .
+  - bin/pip install -r requirements.txt
   - bin/buildout annotate
   - bin/buildout
 script:

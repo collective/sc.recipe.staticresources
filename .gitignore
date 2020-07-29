@@ -17,9 +17,11 @@ eggs/
 htmlcov/
 include/
 lib/
+/local
 local.cfg
 Makefile
 parts/
+share/
 src/collective.*
 src/plone.*
 var/
