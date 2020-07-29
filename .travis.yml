@@ -9,7 +9,7 @@ cache:
 matrix:
   fast_finish: true
 before_install:
-- pip install coveralls pylint configparser==3.5.3
+  - pip install coveralls
 install:
   - virtualenv -p `which python` .
   - bin/pip install -r requirements.txt
@@ -18,7 +18,7 @@ install:
 script:
   - bin/code-analysis
   - bin/test
-  - pylint --py3k --disable=no-absolute-import src/sc/recipe/staticresources
+  - bin/pylint --py3k --disable=no-absolute-import src/sc/recipe/staticresources
 after_success:
   - bin/createcoverage --output-dir=htmlcov
   - coveralls
