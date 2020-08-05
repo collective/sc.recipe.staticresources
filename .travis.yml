@@ -1,6 +1,5 @@
 language: python
 python: 2.7
-sudo: false
 cache:
   directories:
   - $HOME/.pylint.d
@@ -8,18 +7,18 @@ cache:
   - parts/node
 matrix:
   fast_finish: true
-before_install:
-- pip install coveralls pylint configparser==3.5.3
 install:
-  - python bootstrap.py
+  - virtualenv -p `which python` .
+  - bin/pip install -r requirements.txt
   - bin/buildout annotate
   - bin/buildout
 script:
   - bin/code-analysis
   - bin/test
-  - pylint --py3k --disable=no-absolute-import src/sc/recipe/staticresources
+  - bin/pylint --py3k --disable=no-absolute-import src/sc/recipe/staticresources
 after_success:
   - bin/createcoverage --output-dir=htmlcov
+  - pip install coveralls
   - coveralls
 after_failure:
   - bin/csslint --version
