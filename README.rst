@@ -55,7 +55,7 @@ To enable this product in a buildout-based installation:
 
     [node]
     recipe = gp.recipe.node
-    version = 8.11.2
+    version = 14.15.4
     npms = npm yarn
     scripts = npm yarn
 
