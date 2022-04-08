@@ -31,8 +31,9 @@ Mostly Harmless
 .. image:: https://img.shields.io/github/workflow/status/collective/sc.recipe.staticresources/sc.recipe.staticresources/master?label=GitHub%20Actions
    :target: https://github.com/collective/sc.recipe.staticresources/actions/workflows/plone-package.yml
 
-.. image:: https://img.shields.io/coveralls/simplesconsultoria/sc.recipe.staticresources/master.svg
-    :target: https://coveralls.io/r/simplesconsultoria/sc.recipe.staticresources
+
+.. image:: https://codecov.io/gh/collective/sc.recipe.staticresources/branch/master/graph/badge.svg?token=aX5fIOPUko
+   :target: https://codecov.io/gh/collective/sc.recipe.staticresources
 
 Got an idea? Found a bug? Let us know by `opening a support ticket <https://github.com/simplesconsultoria/sc.recipe.staticresources/issues>`_.
 
