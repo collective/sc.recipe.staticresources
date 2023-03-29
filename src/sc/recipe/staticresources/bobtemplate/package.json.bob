@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "main": "app/{{{short_name}}}.js",
   "scripts": {
-    "build": "./node_modules/.bin/webpack -p",
+    "build": "./node_modules/.bin/webpack",
     "debug": "NODE_ENV=debug ./node_modules/.bin/webpack --watch",
-    "watch": "./node_modules/.bin/webpack -p --watch",
+    "watch": "./node_modules/.bin/webpack --watch",
     "test": "NODE_ENV=testing ./node_modules/.bin/karma start --single-run"
   },
   "babel": {

@@ -4,7 +4,8 @@ Changelog
 1.1b8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Upgrade node packages.
+  [wesleybl]
 
 
 1.1b7 (2019-10-02)
