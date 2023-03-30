@@ -106,7 +106,11 @@ class Recipe(object):
         self._create_script("env", "/bin/bash")
 
         if "build" in package_json["scripts"]:
-            subprocess.call(self.bin_directory + "/build-" + self.short_name)
+            return_code = subprocess.call(
+                self.bin_directory + "/build-" + self.short_name
+            )
+            if return_code:
+                raise Exception("Error in building package node. See above.")
 
     def install(self):
         # check if previous directory exists
