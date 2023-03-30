@@ -4,7 +4,8 @@ Changelog
 1.1b8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Makes the buildout fail, if the node package build fails. This will stop the buildout from running (closes `#79 <https://github.com/collective/sc.recipe.staticresources/issues/79>`_).
+  [wesleybl]
 
 
 1.1b7 (2019-10-02)
