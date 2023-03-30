@@ -14,10 +14,10 @@ import re
 import subprocess
 
 
-VERSION = pkg_resources.get_distribution('sc.recipe.staticresources').version
-if 'dev' in VERSION:
-    matched = re.match(r'(\d+\.\d+\w?)(\d+)(.*)', VERSION).groups()
-    VERSION = '{0}{1}'.format(matched[0], int(matched[1]) - 1)
+VERSION = pkg_resources.get_distribution("sc.recipe.staticresources").version
+if "dev" in VERSION:
+    matched = re.match(r"(\d+\.\d+\w?)(\d+)(.*)", VERSION).groups()
+    VERSION = "{0}{1}".format(matched[0], int(matched[1]) - 1)
 CURRENT_DIR = path.dirname(__file__)
 SCRIPT_TEMPLATE = """#!/bin/sh
 export PATH={bin_directory}:$PATH
@@ -35,23 +35,25 @@ class Recipe(object):
         self.name = name
         self.options = options
         self.logger = logging.getLogger(self.name)
-        self.bin_directory = buildout['buildout']['bin-directory']
+        self.bin_directory = buildout["buildout"]["bin-directory"]
 
         # Check required options
-        if not self.options.get('name', False):
+        if not self.options.get("name", False):
             self._error('Missing "name" parameter with the package name.')
-        if not self.options.get('short_name', False):
-            self._error('Missing "short_name" parameter with a simplified name of package.')
-        self.short_name = options['short_name']
+        if not self.options.get("short_name", False):
+            self._error(
+                'Missing "short_name" parameter with a simplified name of package.'
+            )
+        self.short_name = options["short_name"]
 
         # Set default value for options
-        directory = self.buildout['buildout']['directory']
-        self.options.setdefault('directory', '{0}/webpack'.format(directory))
-        self.webpack_directory = options['directory']
-        self.options.setdefault('destination', 'dist')
-        self.options.setdefault('bobtemplate', path.join(CURRENT_DIR, 'bobtemplate'))
-        self.bobtemplate = options['bobtemplate']
-        self.options.setdefault('version', VERSION)
+        directory = self.buildout["buildout"]["directory"]
+        self.options.setdefault("directory", "{0}/webpack".format(directory))
+        self.webpack_directory = options["directory"]
+        self.options.setdefault("destination", "dist")
+        self.options.setdefault("bobtemplate", path.join(CURRENT_DIR, "bobtemplate"))
+        self.bobtemplate = options["bobtemplate"]
+        self.options.setdefault("version", VERSION)
 
     def _error(self, msg):
         self.logger.error(msg)
@@ -78,38 +80,38 @@ class Recipe(object):
         )
 
     def _create_script(self, name, command):
-        script_name = name + '-' + self.short_name
-        out_file = self.bin_directory + '/' + script_name
-        with open(out_file, 'w') as output:
+        script_name = name + "-" + self.short_name
+        out_file = self.bin_directory + "/" + script_name
+        with open(out_file, "w") as output:
             data = SCRIPT_TEMPLATE.format(
                 bin_directory=self.bin_directory,
                 webpack_directory=self.webpack_directory,
                 command=command,
             )
             output.write(data)
-        subprocess.call(['chmod', '775', out_file])
-        self.logger.info('Install ' + script_name)
+        subprocess.call(["chmod", "775", out_file])
+        self.logger.info("Install " + script_name)
 
     def _remove_old_scritps(self):
-        for script in glob(self.bin_directory + '/*-' + self.short_name):
+        for script in glob(self.bin_directory + "/*-" + self.short_name):
             os.remove(script)
 
     def _create_new_scripts(self):
-        with open(self.webpack_directory + '/package.json') as data_file:
+        with open(self.webpack_directory + "/package.json") as data_file:
             package_json = json.load(data_file)
 
-        for name in package_json['scripts']:
-            self._create_script(name, 'npm run ' + name)
+        for name in package_json["scripts"]:
+            self._create_script(name, "npm run " + name)
 
-        self._create_script('env', '/bin/bash')
+        self._create_script("env", "/bin/bash")
 
-        if 'build' in package_json['scripts']:
-            subprocess.call(self.bin_directory + '/build-' + self.short_name)
+        if "build" in package_json["scripts"]:
+            subprocess.call(self.bin_directory + "/build-" + self.short_name)
 
     def install(self):
         # check if previous directory exists
         if not path.isdir(path.dirname(self.webpack_directory)):
-            self.logger.error('Please check if this is a valid directory.')
+            self.logger.error("Please check if this is a valid directory.")
             return
 
         if not path.isdir(self.webpack_directory):

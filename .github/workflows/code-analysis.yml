@@ -11,7 +11,7 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                env: ['py38-lint']
+                env: ['black-check', 'py38-lint']
                 python-version: [3.8]
         steps:
             - uses: actions/checkout@v3
