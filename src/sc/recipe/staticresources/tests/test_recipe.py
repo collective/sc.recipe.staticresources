@@ -4,6 +4,7 @@ from shutil import rmtree
 from tempfile import mkdtemp
 
 import os
+import subprocess
 import unittest
 
 
@@ -33,9 +34,21 @@ class RecipeTestCase(unittest.TestCase):
             "short_name": "mypackagename",
         }
         self.name = "static-resources"
+        self._create_git_repository()
         self.static_resources = self._get_recipe()
 
-    def tearDown(self):  # noqa
+    def _create_git_repository(self):
+        """Create a git repository in the test directory."""
+        open("{0}/test.txt".format(self.test_dir), "w").close()
+        subprocess.call("git init", cwd=self.test_dir, shell=True)
+        subprocess.call("git config user.name 'test'", cwd=self.test_dir, shell=True)
+        subprocess.call(
+            "git config user.email 'test@test.com'", cwd=self.test_dir, shell=True
+        )
+        subprocess.call("git add .", cwd=self.test_dir, shell=True)
+        subprocess.call('git commit -m "initial"', cwd=self.test_dir, shell=True)
+
+    def tearDown(self):
         rmtree(self.test_dir)
 
     def _get_recipe(self, buildout_options=None, name=None, options=None):
@@ -60,14 +73,20 @@ class RecipeTestCase(unittest.TestCase):
         self.assertEqual(static_resources.options["directory"], directory)
 
     def test_custom_directory(self):
+        parent_dir = "/tmp/custom"
+        os.makedirs(parent_dir)
         options = self.options
-        directory = "/tmp/webpack"
+        directory = "/tmp/custom/webpack"
         options["directory"] = directory
         static_resources = self._get_recipe(None, None, options)
         self.assertEqual(static_resources.options["directory"], directory)
+        test_dir = self.test_dir
+        self.test_dir = parent_dir
+        self._create_git_repository()
+        self.test_dir = test_dir
         static_resources.install()
         self.assertTrue(os.path.exists(directory))
-        rmtree(directory)
+        rmtree(parent_dir)
 
     def test_custom_destination(self):
         options = self.options
