@@ -31,7 +31,7 @@
     "sinon": "^6.0.0",
     "style-loader": "^0.21.0",
     "svg-url-loader": "^2.3.2",
-    "webpack": "^3",
+    "webpack": "^4.0.0",
     "webpack-spritesmith": "^0.5.2"
   }
 }
